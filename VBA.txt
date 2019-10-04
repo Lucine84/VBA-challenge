@@ -1,0 +1,65 @@
+Sub StockMarket():
+' COLOR FORMATTING THE YEARLY CHANGE
+Dim Rg As Range
+Dim Condition1 As FormatCondition, Condition2 As FormatCondition
+Set Rg = Range("J2", Range("J2").End(xlDown))
+' Define the rules for each condition
+Set Condition1 = Rg.FormatConditions.Add(xlCellValue, xlGreater, 0)
+Set Condition2 = Rg.FormatConditions.Add(xlCellValue, xlLess, 0)
+' Define the format that will be applied to each condition
+With Condition1
+.Interior.Color = vbGreen
+End With
+With Condition2
+.Interior.Color = vbRed
+End With
+For Each ws In Worksheets
+
+'Range insert
+
+Range("I1").Value = "Ticker"
+Range("J1").Value = "Yearly Change"
+Range("K1").Value = "Percent Change"
+Range("L1").Value = "Total Stock Volume"
+
+Dim i As Integer
+Dim j As Integer
+
+Dim Stock_Ticker As String
+
+Dim Yearly_Change As Integer
+Yearly_Change = 0
+
+Dim Percentage_Change As Integer
+Percentage_Change = 0
+
+Dim Stock_Volume As Double
+Stock_Volume = 0
+
+Dim Summary_Table_Row As Integer
+Summary_Table_Row = 0
+
+
+'Determine last row
+lastrow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+'Loop through all tickers
+For i = 2 To lastrow
+For j = 2 To lastrow
+
+'Check if we are still within the same tricker
+    If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+    
+    
+Stock_Ticker = Cells(i, 1).Value
+
+
+Else
+
+    Stock_Volume = Stock_Volume + Cells(i, 7).Value
+
+End If
+Next i
+
+
+End Sub
